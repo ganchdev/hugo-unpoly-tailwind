@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply h-full;
+  }
+
+  html {
+    --bg: transparent;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+    background: var(--bg);
+    outline: none !important;
+
+    @apply dark:bg-black/90;
+  }
+
+  body:focus {
+    outline: 1px dashed #85b1ba;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply rounded-full bg-black px-7 py-4 text-sm text-white no-underline shadow duration-100 active:scale-95 dark:bg-white dark:text-black;
+  }
+
+  .link {
+    @apply duration-200 hover:text-black dark:hover:text-white;
+  }
+}
+
+@layer utilities {
+  .not-ready * {
+    @apply !transition-none;
+  }
+
+  .highlight tr {
+    border-bottom-width: 0;
+  }
+
+  .btn-menu::before,
+  .btn-menu::after {
+    @apply block h-[2px] w-5 bg-black duration-200 content-[''] dark:invert;
+  }
+
+  .nav-wrapper {
+    background: var(--bg);
+  }
+
+  .open {
+    @apply overflow-hidden;
+  }
+
+  .open .btn-menu::before {
+    @apply w-6 translate-y-[5.5px] rotate-45;
+  }
+
+  .open .btn-menu::after {
+    @apply w-6 -translate-y-[5.5px] -rotate-45;
+  }
+
+  .open .nav-wrapper {
+    @apply top-0;
+  }
+
+  article {
+    @apply text-lg leading-[1.8] text-black dark:text-white;
+  }
+
+  article pre:not(blockquote pre) {
+    @apply -mx-8 !p-8 shadow;
+  }
+
+  article blockquote {
+    padding-left: calc(theme('space.8') - 3px) !important;
+    margin-left: calc(theme('space.8') * -1) !important;
+
+    @apply !border-black dark:!border-white;
+  }
+}
+
+.up-current {
+  @apply text-orange-500;
+}
+
+a:hover {
+  @apply text-orange-800;
+}
+
+*:focus {
+  outline: none;
+}

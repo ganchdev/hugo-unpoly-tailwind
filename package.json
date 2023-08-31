@@ -1,0 +1,22 @@
+{
+  "name": "basetheme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "hugo:build": "cp exampleSite/go.default.mod exampleSite/go.mod",
+    "hugo:generate": "hugo --gc --minify --themesDir=../.. --source=exampleSite --config=go.toml,config.toml",
+    "hugo:dev": "hugo server --buildDrafts --watch --minify --disableFastRender --themesDir=../.. --source=exampleSite --baseURL=localhost --bind=localhost --port=1313",
+    "tailwind:build": "npx tailwindcss -m -i ./assets/main.css -o ./static/css/tailwind.min.css",
+    "tailwind:dev": "npx tailwindcss -m -i ./assets/main.css -o ./static/css/tailwind.min.css --watch",
+    "build": "npm run hugo:build & npm run hugo:generate",
+    "dev": "npm run tailwind:dev && npm run hugo:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "tailwindcss": "^3.3.3"
+  }
+}

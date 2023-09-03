@@ -6,7 +6,7 @@
 
   // Search for posts
   async function searchPosts(value) {
-    if (!value) { return await up.navigate({ url: "/" }) }
+    if (!value) { return await up.navigate({ url: window.baseUrl }) }
 
     function fragmentLoaded() {
       const pagination = document.querySelector(".posts-nav");
@@ -35,7 +35,7 @@
 
     await up.render({
       target: "#all-posts",
-      url: "/all",
+      url: `${window.baseUrl}all`,
       onLoaded: fragmentLoaded,
       onRendered: fragmentRendered
     });

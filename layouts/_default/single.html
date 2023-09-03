@@ -7,14 +7,14 @@
     <div class="font-sans">
       <h1 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-3xl md:text-4xl">{{ .Title }}</h1>
         {{ if ne .Type "page" }}
-            {{ if .Date }}
-              <time class="text-sm md:text-base font-normal text-gray-600">{{ .Date | time.Format ":date_medium" }}</time>
-            {{ end }}
-            {{ $single_author := or .Params.Author site.Author.name }}
-            {{ if $single_author }}
-              <span class="mx-1">&middot;</span>
-              <span class="text-sm md:text-base font-normal text-gray-600">{{ $single_author }}</span>
-            {{ end }}
+          {{ if .Date }}
+            <time class="text-sm md:text-base font-normal text-gray-600">{{ .Date | time.Format ":date_medium" }}</time>
+          {{ end }}
+          {{ $single_author := or .Params.Author site.Author.name }}
+          {{ if $single_author }}
+            <span class="mx-1">&middot;</span>
+            <span class="text-sm md:text-base font-normal text-gray-600">{{ $single_author }}</span>
+          {{ end }}
         {{ end }}
     </div>
 
@@ -30,7 +30,7 @@
         Tags:
         {{ range .Params.tags }}
           {{ $href := print (absURL "tags/") (urlize .) }}
-          <a href="{{ $href }}" class="text-base md:text-sm text-orange-500 hover:text-orange-800 no-underline hover:underline">{{ . }}</a>
+          <a up-preload up-instant up-follow href="{{ $href }}" class="text-base md:text-sm text-orange-500 hover:text-orange-800 no-underline hover:underline">{{ . }}</a>
         {{ end }}
       </div>
     {{ end }}
@@ -42,29 +42,29 @@
 
       <!--Next & Prev Links-->
       {{ if not site.Params.disablePostNavigation }}
-          {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
-          {{ if and (gt (len $pages) 1) (in $pages . ) }}
-            <nav class="font-sans flex content-center px-4 pb-12">
-                {{ with $pages.Next . }}
-                  <div class="text-left flex w-1/2">
-                    <a href="{{ .Permalink }}"
-                       class="break-normal text-base md:text-sm hover:text-orange-800 font-bold no-underline hover:underline">
-                      <span class="mr-1.5">←</span>
-                        {{ .Title }}
-                    </a>
-                  </div>
-                {{ end }}
-                {{ with $pages.Prev . }}
-                  <div class="ml-auto justify-end flex w-1/2">
-                    <a href="{{ .Permalink }}"
-                       class="break-normal text-base md:text-sm hover:text-orange-800 font-bold no-underline hover:underline">
-                        {{ .Title }}
-                      <span class="ml-1.5">→</span>
-                    </a>
-                  </div>
-                {{ end }}
-            </nav>
-          {{ end }}
+        {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+        {{ if and (gt (len $pages) 1) (in $pages . ) }}
+          <nav class="font-sans flex content-center px-4 pb-12">
+            {{ with $pages.Next . }}
+              <div class="text-left flex w-1/2">
+                <a up-preload up-instant up-follow href="{{ .Permalink }}"
+                   class="break-normal text-base md:text-sm hover:text-orange-800 font-bold no-underline hover:underline">
+                  <span class="mr-1.5">←</span>
+                    {{ .Title }}
+                </a>
+              </div>
+            {{ end }}
+            {{ with $pages.Prev . }}
+              <div class="ml-auto justify-end flex w-1/2">
+                <a up-preload up-instant up-follow href="{{ .Permalink }}"
+                   class="break-normal text-base md:text-sm hover:text-orange-800 font-bold no-underline hover:underline">
+                    {{ .Title }}
+                  <span class="ml-1.5">→</span>
+                </a>
+              </div>
+            {{ end }}
+          </nav>
+        {{ end }}
       {{ end }}
 
       <!--/Next & Prev Links-->

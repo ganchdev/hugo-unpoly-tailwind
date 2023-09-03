@@ -1,4 +1,43 @@
-<script src="/js/feather.min.js"></script>
 <script>
-  feather.replace()
+  // Toggle the menu
+  function toggleNav() {
+    document.querySelector("#nav-content").classList.toggle("hidden");
+  }
+
+  // Search for posts
+  async function searchPosts(value) {
+    if (!value) { return await up.navigate({ url: "/" }) }
+
+    function fragmentLoaded() {
+      const pagination = document.querySelector(".posts-nav");
+      if (pagination) {
+        pagination.remove();
+      }
+    }
+
+    function fragmentRendered(event) {
+      const currentSections = document.querySelectorAll("section")
+      const renderedSections = event.fragment.querySelectorAll("section");
+
+      const matchingSectionsIds = Array.from(renderedSections)
+        .filter((section) => {
+          const dataTitle = section.getAttribute('data-title');
+          return dataTitle.toLowerCase().includes(value.toLowerCase());
+        })
+        .map((section) => section.id);
+
+      currentSections.forEach((section) => {
+        if (!matchingSectionsIds.includes(section.id)) {
+          section.remove();
+        }
+      });
+    }
+
+    await up.render({
+      target: "#all-posts",
+      url: "/all",
+      onLoaded: fragmentLoaded,
+      onRendered: fragmentRendered
+    });
+  }
 </script>

@@ -5,17 +5,11 @@
   <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     {{ partial "header.html" . }}
 
-    <main up-main class="prose prose-neutral container w-full min-h-[calc(100%-9rem)] max-w-3xl mx-auto pt-12">
+    <main up-main class="prose prose-neutral container w-full min-h-[calc(100%-9rem)] max-w-3xl mx-auto py-12">
       {{ block "main" . }}{{ end }}
     </main>
 
     {{ partial "footer.html" . }}
-
-    <script>
-      //Javascript to toggle the menu
-      document.getElementById('nav-toggle').onclick = function() {
-        document.getElementById("nav-content").classList.toggle("hidden");
-      }
-    </script>
+    {{ partial "script.html" . }}
   </body>
 </html>

@@ -13,59 +13,50 @@
 {{ end }}
 <!---->
 
-{{ $paginator := .Paginate $pages }}
-{{ range $index, $page := $paginator.Pages }}
-  {{ if and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) }}
-    {{ $avatar_url := $.Scratch.Get "avatar_url" }}
-    {{ if or $avatar_url site.Params.name }}
-      <div class="-mt-2 mb-16 flex items-center">
-        {{ if $avatar_url }}
-          <div class="mr-5 shrink-0 rounded-full border-[0.5px] border-black/10 bg-white/50 p-3 shadow dark:bg-white/[15%]">
-            <img class="my-0 aspect-square w-26 rounded-full !bg-black/5 dark:!bg-black/80"
-                 src="{{ $avatar_url }}"
-                 alt="{{ site.Params.name | default site.Title }}"
-            />
-          </div>
+<!-- Search -->
+<div class="w-full mb-10">
+  <div class="relative flex items-center w-full h-12 rounded-lg bg-white overflow-hidden">
+    <div class="grid place-items-center h-full w-12 text-gray-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    <input name="search-posts" up-watch="searchPosts(value)" up-watch-delay="300" class="peer h-full w-full outline-none text-sm text-gray-700 pr-2" type="text" id="search" placeholder="Search something.." />
+  </div>
+</div>
+<!---->
+
+<!-- Posts -->
+<div id="all-posts">
+  {{ $paginator := .Paginate $pages }}
+  {{ range $index, $page := $paginator.Pages }}
+    <section id="{{ .File.BaseFileName }}" data-title="{{ .Title }}" class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
+      <a class="block no-underline" up-preload up-instant up-follow href="{{ .Permalink }}">
+        {{ if gt .Weight 0 }}
+          <span class="mb-2 ml-px inline-block text-[0.8rem] font-medium uppercase tracking-wider text-orange-500 opacity-70">Featured</span>
         {{ end }}
-        {{ if site.Params.name }}
-          <div>
-            <h1 class="mb-2 mt-3 text-[1.6rem] font-bold">{{ site.Params.name }}</h1>
-            <div class="break-words">
-                {{ site.Params.bio | default (print `A personal blog by ` site.Params.name) }}
-            </div>
-          </div>
-        {{ end }}
-      </div>
-    {{ end }}
+        <h2 class="!my-0 pb-1 font-bold !leading-none">{{ .Title }}</h2>
+        <p class="opacity-60 font-normal">{{ .Description }}</p>
+        <time class="text-sm font-light antialiased opacity-60">{{ .Date | time.Format ":date_medium" }}</time>
+      </a>
+    </section>
   {{ end }}
-
-
-  <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
-      {{ if gt .Weight 0 }}
-        <span class="mb-2 ml-px inline-block text-[0.8rem] font-medium uppercase tracking-wider text-orange-500 opacity-70">Featured
-      </span>
-      {{ end }}
-    <h2 class="!my-0 pb-1 font-bold !leading-none">{{ .Title }}</h2>
-    <p class="opacity-70">{{ .Description }}</p>
-    <time class="text-sm antialiased opacity-60">{{ .Date | time.Format ":date_medium" }}</time>
-    <a class="absolute inset-0 text-[0]" up-preload up-instant up-follow href="{{ .Permalink }}">{{ .Title }}</a>
-  </section>
-
-{{ end }}
+</div>
+<!---->
 
 <!-- Main Nav -->
 {{ if gt $paginator.TotalPages 1 }}
-  <nav class="mt-16 flex">
-      {{ if $paginator.HasPrev }}
-        <a href="{{ $paginator.Prev.URL }}" class="bg-transparent border border-orange-500 hover:border-orange-800 text-xs no-underline text-orange-500 hover:text-orange-800 font-bold py-2 px-4 rounded-full">
-          ← Previous Page
-        </a>
-      {{ end }}
-      {{ if $paginator.HasNext }}
-        <a href="{{ $paginator.Next.URL }}" class="bg-transparent border border-orange-500 hover:border-orange-800 text-xs no-underline text-orange-500 hover:text-orange-800 font-bold py-2 px-4 rounded-full">
-            Next Page →
-        </a>
-      {{ end }}
+  <nav class="posts-nav mt-16 flex" data-page-size="{{ .Paginator.PageSize }}">
+    {{ if $paginator.HasPrev }}
+      <a up-preload up-follow href="{{ $paginator.Prev.URL }}" class="bg-transparent border border-orange-500 hover:border-orange-800 text-xs no-underline text-orange-500 hover:text-orange-800 font-bold py-2 px-4 rounded-full">
+        ← Previous Page
+      </a>
+    {{ end }}
+    {{ if $paginator.HasNext }}
+      <a up-preload up-follow href="{{ $paginator.Next.URL }}" class="bg-transparent border border-orange-500 hover:border-orange-800 text-xs no-underline text-orange-500 hover:text-orange-800 font-bold py-2 px-4 rounded-full">
+        Next Page →
+      </a>
+    {{ end }}
   </nav>
 {{ end }}
 <!---->

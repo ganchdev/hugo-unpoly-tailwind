@@ -1,0 +1,16 @@
+<div id="all-posts">
+  {{ range where .Site.Pages "Type" "post" }}
+    {{ if ne .File.BaseFileName "_index" }}
+      <section id="{{ .File.BaseFileName }}" data-title="{{ .Title }}" class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
+        <a class="block no-underline" up-preload up-instant up-follow href="{{ .Permalink }}">
+          {{ if gt .Weight 0 }}
+            <span class="mb-2 ml-px inline-block text-[0.8rem] font-medium uppercase tracking-wider text-orange-500 opacity-70">Featured</span>
+          {{ end }}
+          <h2 class="!my-0 pb-1 font-bold !leading-none">{{ .Title }}</h2>
+          <p class="opacity-60 font-normal">{{ .Description }}</p>
+          <time class="text-sm font-light antialiased opacity-60">{{ .Date | time.Format ":date_medium" }}</time>
+        </a>
+      </section>
+    {{ end }}
+  {{ end }}
+</div>

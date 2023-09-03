@@ -10,7 +10,7 @@
     "tailwind:build": "npx tailwindcss -m -i ./assets/main.css -o ./static/css/tailwind.min.css",
     "tailwind:dev": "npx tailwindcss -m -i ./assets/main.css -o ./static/css/tailwind.min.css --watch",
     "build": "npm run hugo:build & npm run hugo:generate",
-    "dev": "npm run tailwind:dev && npm run hugo:dev"
+    "dev": "npx tailwindcss -m -i ./assets/main.css -o ./static/css/tailwind.min.css --watch & npm run hugo:dev"
   },
   "keywords": [],
   "author": "",

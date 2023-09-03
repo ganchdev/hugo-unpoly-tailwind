@@ -90,9 +90,14 @@
 }
 
 a:hover {
-  @apply text-orange-800;
+  /*@apply text-orange-800;*/
 }
 
-*:focus {
-  outline: none;
+.dark-mode-icon {
+  width: 20px;
 }
+
+.light-mode-icon {
+  width: 25px;
+}
+
